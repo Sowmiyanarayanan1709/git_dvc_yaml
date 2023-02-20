@@ -12,17 +12,17 @@ stages:
     params:
       params.yaml:
         prepare.seed: 20170428
-        prepare.split: 0.2
+        prepare.split: 0.3
     outs:
     - path: data/prepared
-      md5: b8d198f4479640f2e56fb6656511f172.dir
+      md5: 5ea6c2b4326c8326fac7df8852def0ca.dir
       size: 4908418
       nfiles: 2
   featurize:
     cmd: python src/featurization.py data/prepared data/features
     deps:
     - path: data/prepared
-      md5: b8d198f4479640f2e56fb6656511f172.dir
+      md5: 5ea6c2b4326c8326fac7df8852def0ca.dir
       size: 4908418
       nfiles: 2
     - path: src/featurization.py
@@ -34,15 +34,15 @@ stages:
         featurize.ngrams: 1
     outs:
     - path: data/features
-      md5: 06ea03a76741425cbd5fb6bd85e11c64.dir
-      size: 911591
+      md5: e4dcf77158688e63c58aec1aeacc9c0d.dir
+      size: 911600
       nfiles: 2
   train:
     cmd: python src/train.py data/features model.pkl
     deps:
     - path: data/features
-      md5: 06ea03a76741425cbd5fb6bd85e11c64.dir
-      size: 911591
+      md5: e4dcf77158688e63c58aec1aeacc9c0d.dir
+      size: 911600
       nfiles: 2
     - path: src/train.py
       md5: c3961d777cfbd7727f9fde4851896006
@@ -54,33 +54,33 @@ stages:
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: 565a2cc57058e5672a02c72562fd6275
-      size: 1465721
+      md5: 9728d8bd16f0eb37c9be28f84424e9d4
+      size: 1396160
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features
     deps:
     - path: data/features
-      md5: 06ea03a76741425cbd5fb6bd85e11c64.dir
-      size: 911591
+      md5: e4dcf77158688e63c58aec1aeacc9c0d.dir
+      size: 911600
       nfiles: 2
     - path: model.pkl
-      md5: 565a2cc57058e5672a02c72562fd6275
-      size: 1465721
+      md5: 9728d8bd16f0eb37c9be28f84424e9d4
+      size: 1396160
     - path: src/evaluate.py
       md5: e538db1a5c3bb59f954b642fb7d2af1e
       size: 3304
     outs:
     - path: eval/importance.png
-      md5: 679a08e0bf70c0e4b406decdaa6826bc
-      size: 29128
+      md5: d8eb43f4a81024c1d391d245cfdbacf2
+      size: 29012
     - path: eval/live/metrics.json
-      md5: 913536794ba05b573ad93ebecc7e6f7d
-      size: 203
+      md5: 36b697850a1a777a7411ee7962f124ba
+      size: 204
     - path: eval/live/plots
-      md5: 018066fc47d4019984ab884f54de448c.dir
-      size: 475518
+      md5: 5aa95d88efa6861fccc010dfb5239e51.dir
+      size: 478835
       nfiles: 4
     - path: eval/prc
-      md5: 65ccc8624a2ad08877674145db21529b.dir
-      size: 226110
+      md5: 35e52437756e6a403c593fadac0da72e.dir
+      size: 282641
       nfiles: 2
